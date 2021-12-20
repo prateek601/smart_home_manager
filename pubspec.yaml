@@ -63,6 +63,12 @@ flutter:
     - family: PulpDisplay
       fonts:
         - asset: fonts/PulpDisplay-Bold.ttf
+        - asset: fonts/PulpDisplay-ExtraBold.ttf
+        - asset: fonts/PulpDisplay-ExtraLight.ttf
+        - asset: fonts/PulpDisplay-Light.ttf
+        - asset: fonts/PulpDisplay-Medium.ttf
+        - asset: fonts/PulpDisplay-Regular.ttf
+        - asset: fonts/PulpDisplay-SemiBold.ttf
 
   #
   # For details regarding fonts from package dependencies,
