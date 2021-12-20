@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home_manager/constants.dart';
+import 'package:smart_home_manager/shared/CardWrapper.dart';
 
 class TemperatureCard extends StatefulWidget {
   const TemperatureCard({Key? key}) : super(key: key);
@@ -9,16 +10,12 @@ class TemperatureCard extends StatefulWidget {
 }
 
 class _TemperatureCardState extends State<TemperatureCard> {
+  Color cardColor = Constants.whiteColor;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Constants.whiteColor,
-          borderRadius: BorderRadius.circular(15)
-        ),
-        height: 200,
-      ),
+    return CardWrapper(height: 200,
+        color: cardColor,
+        child: Column()
     );
   }
 }
