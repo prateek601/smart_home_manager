@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home_manager/constants.dart';
 import 'package:smart_home_manager/data/SongData.dart';
@@ -27,19 +30,11 @@ class _MusicCardState extends State<MusicCard> {
       )
     ];
 
-  late String _coverArt;
-  late String _title;
-  late String _url;
-  late String _artist;
+  int index = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    _coverArt = songs[0].coverArt;
-    _title = songs[0].title;
-    _artist = songs[0].artist;
-    _url = songs[0].url;
-  }
+  AssetsAudioPlayer? _assetsAudioPlayer;
+  bool isPlaying = false;
+  StreamSubscription? streamSubscriptionPlayerStatePlaying;
 
   @override
   Widget build(BuildContext context) {
@@ -49,40 +44,168 @@ class _MusicCardState extends State<MusicCard> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
-                Row(
-                  children: [
-                    Image.network(
-                      _coverArt,
-                      height: 30,
-                      width: 30,
-                    ),
-                    Column(
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(
+                    songs[index].coverArt,
+                    height: 30,
+                    width: 30,
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _title,
+                          songs[index].title,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 10
+                            fontSize: 10,
+                            color: Constants.whiteColor.withOpacity(0.9)
                           ),
                         ),
                         Text(
-                          _artist,
+                          songs[index].artist,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              fontSize: 10
+                            fontSize: 10,
+                            color: Constants.whiteColor.withOpacity(0.6)
                           ),
                         )
                       ],
-                    )
-                  ],
-                )
+                    ),
+                  ),
+                ),
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () {
+                      onPreviousTapped();
+                    },
+                    child: Icon(
+                      Icons.skip_previous,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      onPlayTapped();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Constants.whiteColor.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(12)
+                      ),
+                      child: Icon(
+                        isPlaying
+                        ?
+                        Icons.pause
+                        :
+                        Icons.play_arrow,
+                        size: 38,
+                        color: Constants.whiteColor,
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () {
+                      onNextTapped();
+                    },
+                    child: Icon(
+                      Icons.skip_next,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                  ),
+                ],
+              ),
             )
           ],
         ),
       )
     );
+  }
+
+  void playSong() {
+    _assetsAudioPlayer = AssetsAudioPlayer.withId('music');
+    _assetsAudioPlayer!.open(
+      Audio.network(
+        songs[index].url,
+        metas: Metas(
+          id: 'Online',
+          title: songs[index].title,
+          artist: songs[index].artist,
+          album: 'OnlineAlbum',
+          image: MetasImage.network(songs[index].coverArt)
+        )
+      ),
+      autoStart: true,
+      showNotification: false,
+      audioFocusStrategy: AssetsAudioPlayer.defaultFocusStrategy
+    );
+
+    playerEvent();
+  }
+
+  void playerEvent() {
+    if (streamSubscriptionPlayerStatePlaying != null) {
+      streamSubscriptionPlayerStatePlaying!.cancel();
+    }
+    streamSubscriptionPlayerStatePlaying =
+        _assetsAudioPlayer!.isPlaying.listen((event) {
+          setState(() {
+            isPlaying = event;
+          });
+        });
+  }
+
+  void onNextTapped() {
+    if(index == songs.length - 1) {
+      index = 0;
+    } else {
+      index++;
+    }
+    setState(() {});
+    playSong();
+  }
+
+  void onPreviousTapped() {
+    if(index == 0) {
+      index = songs.length - 1;
+    } else {
+      index--;
+    }
+    setState(() {});
+    playSong();
+  }
+
+  void onPlayTapped() {
+    setState(() {
+      if(_assetsAudioPlayer == null) {
+        playSong();
+      } else {
+        if(isPlaying) {
+          _assetsAudioPlayer!.pause();
+        } else {
+          _assetsAudioPlayer!.play();
+        }
+      }
+    });
   }
 }
