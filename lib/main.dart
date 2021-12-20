@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Smart Home Manager',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'PulpDisplay'
       ),
       home: Home(),
     );
