@@ -14,6 +14,7 @@ class _PlugWallCardState extends State<PlugWallCard> {
   List<String> notes = ['Macbook Pro', 'HomePad', 'PlayStation 5'];
   Color cardColor = Constants.greyColor;
   Color textColor = Constants.whiteColor;
+  bool _switchValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +29,12 @@ class _PlugWallCardState extends State<PlugWallCard> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Plug Wall',
                   style: TextStyle(
-                    color: textColor
+                    color: textColor,
+                    fontSize: 18
                   ),
                 ),
                 Icon(
@@ -44,6 +45,7 @@ class _PlugWallCardState extends State<PlugWallCard> {
             ),
             ListView.builder(
               itemCount: notes.length,
+              physics: ScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return Row(
@@ -51,7 +53,7 @@ class _PlugWallCardState extends State<PlugWallCard> {
                     Text(
                       '\u2022 ',
                       style: TextStyle(
-                        fontSize: 26,
+                        fontSize: 22,
                         color: textColor,
                         fontWeight: FontWeight.w600,
                         height: 1
@@ -60,7 +62,7 @@ class _PlugWallCardState extends State<PlugWallCard> {
                     Text(
                         notes[index],
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 12,
                           color: textColor,
                           height: 1
                         )
@@ -69,9 +71,10 @@ class _PlugWallCardState extends State<PlugWallCard> {
                 );
             }),
             SwitchButton(
-              switchValue: false,
+              switchValue: _switchValue,
               onPress: (value){
               setState(() {
+                _switchValue = value;
                 if(value == true) {
                   cardColor = Constants.whiteColor;
                   textColor = Constants.blackColor;

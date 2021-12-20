@@ -15,6 +15,38 @@ class BottomCard extends StatelessWidget {
         ),
         color: Constants.greyColor,
       ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Electricity Usage',
+                  style: TextStyle(
+                    color: Constants.whiteColor,
+                    fontSize: 18
+                  ),
+                ),
+                Icon(
+                  Icons.chevron_right,
+                  color: Constants.whiteColor,
+                )
+              ],
+            ),
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                child: Image.asset(
+                  'assets/electricity_usage.PNG',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

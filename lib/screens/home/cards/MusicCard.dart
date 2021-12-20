@@ -52,8 +52,8 @@ class _MusicCardState extends State<MusicCard> {
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
                     songs[index].coverArt,
-                    height: 30,
-                    width: 30,
+                    height: 35,
+                    width: 35,
                   ),
                 ),
                 Expanded(
@@ -66,7 +66,7 @@ class _MusicCardState extends State<MusicCard> {
                           songs[index].title,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 10,
+                            fontSize: 12,
                             color: Constants.whiteColor.withOpacity(0.9)
                           ),
                         ),
@@ -74,7 +74,7 @@ class _MusicCardState extends State<MusicCard> {
                           songs[index].artist,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 10,
+                            fontSize: 8,
                             color: Constants.whiteColor.withOpacity(0.6)
                           ),
                         )
@@ -85,7 +85,7 @@ class _MusicCardState extends State<MusicCard> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(bottom: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -108,16 +108,19 @@ class _MusicCardState extends State<MusicCard> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Constants.whiteColor.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(12)
+                        borderRadius: BorderRadius.circular(17)
                       ),
-                      child: Icon(
-                        isPlaying
-                        ?
-                        Icons.pause
-                        :
-                        Icons.play_arrow,
-                        size: 38,
-                        color: Constants.whiteColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          isPlaying
+                          ?
+                          Icons.pause
+                          :
+                          Icons.play_arrow,
+                          size: 28,
+                          color: Constants.whiteColor,
+                        ),
                       ),
                     ),
                   ),

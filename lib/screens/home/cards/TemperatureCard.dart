@@ -14,7 +14,7 @@ class TemperatureCard extends StatefulWidget {
 class _TemperatureCardState extends State<TemperatureCard> {
   Color cardColor = Constants.whiteColor;
   Color textColor = Constants.blackColor;
-
+  bool _switchValue = true;
   @override
   Widget build(BuildContext context) {
     return CardWrapper(height: 200,
@@ -23,39 +23,39 @@ class _TemperatureCardState extends State<TemperatureCard> {
           padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Home Temperature',
                 style: TextStyle(
-                  color: textColor
+                  color: textColor,
+                  fontSize: 18
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20,bottom: 10),
-                child: RichText(
-                  text: TextSpan(
-                    text: '23 ',
-                    style: TextStyle(
-                      fontSize: 46,
-                      color: textColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: '\u2103',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: textColor
-                        )
-                      ),
-                    ],
+              RichText(
+                text: TextSpan(
+                  text: '23 ',
+                  style: TextStyle(
+                    fontSize: 46,
+                    color: textColor,
+                    fontWeight: FontWeight.w600,
                   ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: '\u2103',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: textColor
+                      )
+                    ),
+                  ],
                 ),
               ),
               SwitchButton(
-                switchValue: true,
+                switchValue: _switchValue,
                 onPress: (value) {
                   setState(() {
+                    _switchValue = value;
                     if(value == true) {
                       cardColor = Constants.whiteColor;
                       textColor = Constants.blackColor;

@@ -14,6 +14,7 @@ class DeviceCard extends StatefulWidget {
 class _DeviceCardState extends State<DeviceCard> {
   Color cardColor = Constants.greyColor;
   Color textColor = Constants.whiteColor;
+  bool _switchValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +58,10 @@ class _DeviceCardState extends State<DeviceCard> {
               ],
             ),
             SwitchButton(
-              switchValue: false,
+              switchValue: _switchValue,
               onPress: (value) {
               setState(() {
+                _switchValue = value;
                 if(value == true) {
                   cardColor = Constants.whiteColor;
                   textColor = Constants.blackColor;
