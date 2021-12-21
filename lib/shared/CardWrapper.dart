@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:glassmorphism/glassmorphism.dart';
 import 'package:smart_home_manager/constants.dart';
+import 'package:smart_home_manager/shared/CustomContainer.dart';
 
 class CardWrapper extends StatelessWidget {
   final double height;
@@ -28,33 +28,12 @@ class CardWrapper extends StatelessWidget {
         child: this.child,
       )
       :
-      GlassmorphicContainer(
-        width: double.infinity,
-        height: this.height,
+      CustomContainer(
         borderRadius: 20,
-        blur: 7,
-        border: 1.5,
-        linearGradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFFffffff).withOpacity(0.1),
-              Color(0xFFFFFFFF).withOpacity(0.05),
-            ],
-            stops: [
-              0.1,
-              1,
-            ]),
-        borderGradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFFffffff).withOpacity(0.5),
-            Color((0xFF000000)).withOpacity(0.5),
-          ],
-        ),
+        height: this.height,
+        width: double.infinity,
         child: this.child,
-      ),
+      )
     );
   }
 }
